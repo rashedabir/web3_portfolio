@@ -4,7 +4,32 @@ import Typed from "react-typed";
 import { styles } from "../styles";
 import { ComputersCanvas } from "./canvas";
 
+import client from "../Client";
+import { useLayoutEffect, useState } from "react";
+
 const Hero = () => {
+  const [developer, setDeveloper] = useState();
+
+  useLayoutEffect(() => {
+    client
+      .fetch(
+        `*[_type == "hero"]{
+      name,
+      header_name,
+      lists,
+      icon{
+        asset->{
+          _id,
+          url
+        },
+      },
+      hexCode,
+    }`
+      )
+      .then((data) => setDeveloper(data[0]))
+      .catch((error) => console.error(error));
+  }, []);
+
   return (
     <section className={`relative w-full h-screen mx-auto`}>
       <div
@@ -17,19 +42,16 @@ const Hero = () => {
 
         <div>
           <h1 className={`${styles.heroHeadText} text-white`}>
-            Hi, I'm <span className="text-[#915EFF]">Rashed</span>
+            Hi, I'm{" "}
+            <span className="text-[#915EFF]">
+              {developer?.name ?? "Rashed"}
+            </span>
           </h1>
           <p className={`${styles.heroSubText} mt-2 text-white-100`}>
             I develop{" "}
             <span className="text-[#915EFF]">
               <Typed
-                strings={[
-                  "Frontend Development",
-                  "Backend Development",
-                  "React Application",
-                  "Full Stack Application",
-                  "Mobile Application",
-                ]}
+                strings={developer?.lists ?? []}
                 typeSpeed={60}
                 backSpeed={40}
                 loop

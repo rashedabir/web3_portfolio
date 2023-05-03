@@ -37,8 +37,6 @@ const About = () => {
   const [services, setServices] = useState([]);
   const [text, setText] = useState();
 
-  console.log({ text });
-
   useLayoutEffect(() => {
     client
       .fetch(

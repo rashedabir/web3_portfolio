@@ -4,5 +4,6 @@ import projects from './projects'
 import experience from './experience'
 import testimonials from './testimonials'
 import about from './about'
+import hero from './hero'
 
-export const schemaTypes = [skill, overview, projects, experience, testimonials, about]
+export const schemaTypes = [hero, about, skill, overview, projects, experience, testimonials]

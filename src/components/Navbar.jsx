@@ -1,14 +1,39 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-import { styles } from "../styles";
+import { close, menu } from "../assets";
 import { navLinks } from "../constants";
-import { logo, menu, close } from "../assets";
+import { styles } from "../styles";
+
+import client from "../Client";
 
 const Navbar = () => {
   const [active, setActive] = useState("");
   const [toggle, setToggle] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [developer, setDeveloper] = useState();
+
+  console.log({ developer });
+
+  useLayoutEffect(() => {
+    client
+      .fetch(
+        `*[_type == "hero"]{
+      name,
+      header_name,
+      lists,
+      icon{
+        asset->{
+          _id,
+          url
+        },
+      },
+      hexCode,
+    }`
+      )
+      .then((data) => setDeveloper(data[0]))
+      .catch((error) => console.error(error));
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -42,9 +67,16 @@ const Navbar = () => {
             window.scrollTo(0, 0);
           }}
         >
-          <img src={logo} alt="logo" className="w-9 h-9 object-contain" />
+          {developer?.icon?.asset?.url && (
+            <img
+              src={developer?.icon?.asset?.url}
+              alt={developer.header_name}
+              className="w-9 h-9 object-contain"
+            />
+          )}
+
           <p className="text-white text-[18px] font-bold cursor-pointer flex ">
-            Rashed Khan
+            {developer?.header_name}
           </p>
         </Link>
 
