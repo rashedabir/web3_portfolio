@@ -11,6 +11,11 @@ export default {
       validation: (Rule) => Rule.required(),
     },
     {
+      title: 'Sort Order',
+      name: 'order',
+      type: 'string',
+    },
+    {
       title: 'Icon',
       name: 'icon',
       type: 'image',

@@ -1,11 +1,10 @@
+import { motion } from "framer-motion";
 import React, { useLayoutEffect, useState } from "react";
 import Tilt from "react-tilt";
-import { motion } from "framer-motion";
 
-import { styles } from "../styles";
 import { eye } from "../assets";
 import { SectionWrapper } from "../hoc";
-import { projects } from "../constants";
+import { styles } from "../styles";
 import { fadeIn, textVariant } from "../utils/motion";
 
 import client from "../Client";
@@ -78,6 +77,7 @@ const Works = () => {
         `*[_type == "projects"]{
       name,
       description,
+      order,
       source_code_link,
       tags,
       image{
@@ -116,9 +116,16 @@ const Works = () => {
       <div className="mt-20 flex flex-wrap gap-7">
         {projects &&
           projects.length > 0 &&
-          projects.map((project, index) => (
-            <ProjectCard key={`project-${index}`} index={index} {...project} />
-          ))}
+          projects
+            .slice(0)
+            .sort((a, b) => Number(a.order) - Number(b.order))
+            .map((project, index) => (
+              <ProjectCard
+                key={`project-${index}`}
+                index={index}
+                {...project}
+              />
+            ))}
       </div>
     </>
   );

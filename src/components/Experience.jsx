@@ -1,17 +1,16 @@
+import { motion } from "framer-motion";
 import React, { useLayoutEffect, useState } from "react";
 import {
   VerticalTimeline,
   VerticalTimelineElement,
 } from "react-vertical-timeline-component";
-import { motion } from "framer-motion";
 
 import "react-vertical-timeline-component/style.min.css";
 
 import client from "../Client";
 
-import { styles } from "../styles";
-import { experiences } from "../constants";
 import { SectionWrapper } from "../hoc";
+import { styles } from "../styles";
 import { textVariant } from "../utils/motion";
 
 const ExperienceCard = ({ experience }) => {
@@ -67,6 +66,7 @@ const Experience = () => {
         `*[_type == "experience"]{
       title,
       company_name,
+      order,
       iconBg,
       date,
       points,
@@ -98,12 +98,15 @@ const Experience = () => {
         <VerticalTimeline>
           {experiences &&
             experiences.length > 0 &&
-            experiences.map((experience, index) => (
-              <ExperienceCard
-                key={`experience-${index}`}
-                experience={experience}
-              />
-            ))}
+            experiences
+              .slice(0)
+              .sort((a, b) => Number(a.order) - Number(b.order))
+              .map((experience, index) => (
+                <ExperienceCard
+                  key={`experience-${index}`}
+                  experience={experience}
+                />
+              ))}
         </VerticalTimeline>
       </div>
     </>

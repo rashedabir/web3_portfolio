@@ -17,6 +17,11 @@ export default {
       validation: (Rule) => Rule.required(),
     },
     {
+      title: 'Sort Order',
+      name: 'order',
+      type: 'string',
+    },
+    {
       title: 'Background Color',
       name: 'iconBg',
       type: 'string',

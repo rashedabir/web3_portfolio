@@ -42,6 +42,7 @@ const About = () => {
       .fetch(
         `*[_type == "overview"]{
       name,
+      order,
       icon{
         asset->{
           _id,
@@ -73,6 +74,8 @@ const About = () => {
       .catch((error) => console.error(error));
   }, []);
 
+  console.log({ services });
+
   return (
     <>
       <motion.div variants={textVariant()}>
@@ -88,9 +91,14 @@ const About = () => {
       </motion.p>
 
       <div className="mt-20 flex flex-wrap gap-10">
-        {services.map((service, index) => (
-          <ServiceCard key={service.name} index={index} {...service} />
-        ))}
+        {services &&
+          services.length > 0 &&
+          services
+            .slice(0)
+            .sort((a, b) => Number(a.order) - Number(b.order))
+            .map((service, index) => (
+              <ServiceCard key={service.name} index={index} {...service} />
+            ))}
       </div>
     </>
   );

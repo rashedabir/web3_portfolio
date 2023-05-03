@@ -22,6 +22,11 @@ export default {
       type: 'string',
     },
     {
+      title: 'Sort Order',
+      name: 'order',
+      type: 'string',
+    },
+    {
       title: 'Image',
       name: 'image',
       type: 'image',
