@@ -2,34 +2,25 @@ import {
   adonis,
   apsis,
   backend,
-  carrent,
+  bengalmeat,
   creator,
   deno,
   docker,
+  eduport,
   electronjs,
   java,
-  javascript,
-  jobit,
   m4yours,
-  material,
   mobile,
   mongodb,
   nestjs,
   nextjs,
   nodejs,
-  python,
   reactjs,
   redux,
   sanity,
   sql,
-  tailwind,
-  tripguide,
-  typeorm,
-  typescript,
-  web,
-  eduport,
   unisearch,
-  bengalmeat,
+  web,
 } from "../assets";
 
 export const navLinks = [
@@ -119,10 +110,6 @@ const technologies = [
     name: "SQL",
     icon: sql,
   },
-  {
-    name: "Type ORM",
-    icon: typeorm,
-  },
 ];
 
 const experiences = [
@@ -133,9 +120,9 @@ const experiences = [
     iconBg: "#ffffff",
     date: "Aug 2022 - Present",
     points: [
-      "Developing and maintaining web applications using React.js and other related technologies.",
-      "Collaborating with cross-functional teams including designers, product managers, and other developers to create high-quality products.",
-      "Participating in code reviews and providing constructive feedback to other developers.",
+      "Design, develop and deploy the components, features, and rich functionalities of the projects.",
+      "Solving critical problems of projects.",
+      "Work out possible improvements and suggest changes to the system that can benefit the overall projects.",
     ],
   },
   {
@@ -145,8 +132,8 @@ const experiences = [
     iconBg: "#ffffff",
     date: "Nov 2021 - Jul 2022",
     points: [
-      "Developing and maintaining web applications using React.js and other related technologies.",
-      "Collaborating with cross-functional teams including designers, product managers, and other developers to create high-quality products.",
+      "Write code all day and learning about new things of technology.",
+      "Collaborating with cross-functional teams to create high-quality products.",
       "Implementing responsive design and ensuring cross-browser compatibility.",
     ],
   },
@@ -155,27 +142,30 @@ const experiences = [
 const testimonials = [
   {
     testimonial:
-      "I thought it was impossible to make a website as beautiful as our product, but Rick proved me wrong.",
-    name: "Sara Lee",
-    designation: "CFO",
-    company: "Acme Co",
-    image: "https://randomuser.me/api/portraits/women/4.jpg",
+      "I thought it was impossible to make a website as beautiful as our product, but Rashed proved me wrong.",
+    name: "comarine",
+    designation: "Client",
+    company: "Fiverr",
+    image:
+      "https://media.istockphoto.com/id/1202490554/vector/person-gray-photo-placeholder-man.jpg?s=612x612&w=0&k=20&c=KyXtDhRIFdY-xFnyc_19UEK0pY3PLz2R6Bpv--VPYwo=",
   },
   {
     testimonial:
-      "I've never met a web developer who truly cares about their clients' success like Rick does.",
-    name: "Chris Brown",
-    designation: "COO",
-    company: "DEF Corp",
-    image: "https://randomuser.me/api/portraits/men/5.jpg",
+      "I've never met a web developer who truly cares about their clients' success like Rashed does.",
+    name: "angelpare",
+    designation: "Client",
+    company: "Fiverr",
+    image:
+      "https://t3.ftcdn.net/jpg/02/33/46/24/360_F_233462402_Fx1yke4ng4GA8TJikJZoiATrkncvW6Ib.jpg",
   },
   {
     testimonial:
-      "After Rick optimized our website, our traffic increased by 50%. We can't thank them enough!",
-    name: "Lisa Wang",
-    designation: "CTO",
-    company: "456 Enterprises",
-    image: "https://randomuser.me/api/portraits/women/6.jpg",
+      "After Rashed optimized our website, our traffic increased by 50%. We can't thank them enough!",
+    name: "Abu Baqar Siddique",
+    designation: "Software Engineer",
+    company: "Enterprises 360",
+    image:
+      "https://media.istockphoto.com/id/1202490554/vector/person-gray-photo-placeholder-man.jpg?s=612x612&w=0&k=20&c=KyXtDhRIFdY-xFnyc_19UEK0pY3PLz2R6Bpv--VPYwo=",
   },
 ];
 
