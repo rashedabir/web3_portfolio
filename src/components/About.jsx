@@ -1,13 +1,13 @@
-import React from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import Tilt from "react-tilt";
 import { motion } from "framer-motion";
 
 import { styles } from "../styles";
-import { services } from "../constants";
 import { SectionWrapper } from "../hoc";
 import { fadeIn, textVariant } from "../utils/motion";
+import client from "../Client";
 
-const ServiceCard = ({ index, title, icon }) => (
+const ServiceCard = ({ index, name, icon }) => (
   <Tilt className="xs:w-[250px] w-full">
     <motion.div
       variants={fadeIn("right", "spring", index * 0.5, 0.75)}
@@ -22,20 +22,59 @@ const ServiceCard = ({ index, title, icon }) => (
         className="bg-tertiary rounded-[20px] py-5 px-12 min-h-[280px] flex justify-evenly items-center flex-col"
       >
         <img
-          src={icon}
+          src={icon?.asset?.url}
           alt="web-development"
           className="w-16 h-16 object-contain"
         />
 
-        <h3 className="text-white text-[20px] font-bold text-center">
-          {title}
-        </h3>
+        <h3 className="text-white text-[20px] font-bold text-center">{name}</h3>
       </div>
     </motion.div>
   </Tilt>
 );
 
 const About = () => {
+  const [services, setServices] = useState([]);
+  const [text, setText] = useState();
+
+  console.log({ text });
+
+  useLayoutEffect(() => {
+    client
+      .fetch(
+        `*[_type == "overview"]{
+      name,
+      icon{
+        asset->{
+          _id,
+          url
+        },
+      },
+      hexCode,
+    }`
+      )
+      .then((data) => setServices(data))
+      .catch((error) => console.error(error));
+  }, []);
+
+  useLayoutEffect(() => {
+    client
+      .fetch(
+        `*[_type == "about"]{
+      text,
+      hexCode,
+    }`
+      )
+      .then((data) => {
+        if (data) {
+          setText(data[0]?.text);
+        } else {
+          setText("");
+        }
+      })
+      .catch((error) => console.error(error));
+  }, []);
+
   return (
     <>
       <motion.div variants={textVariant()}>
@@ -47,17 +86,12 @@ const About = () => {
         variants={fadeIn("", "", 0.1, 1)}
         className="mt-4 text-secondary text-[17px] max-w-3xl leading-[30px]"
       >
-        I've completed B.SC in CSE from Daffodil International University (DIU)
-        I consider myself who is persistent, a quick learner, and loves
-        problem-solving by using simple and scalable solutions. In my everyday
-        life, I try to love reading a book, write different things, helping
-        people, and coding as well. I also think about different sorts of
-        people. That basically inspires me as a different aspect.
+        {text}
       </motion.p>
 
       <div className="mt-20 flex flex-wrap gap-10">
         {services.map((service, index) => (
-          <ServiceCard key={service.title} index={index} {...service} />
+          <ServiceCard key={service.name} index={index} {...service} />
         ))}
       </div>
     </>

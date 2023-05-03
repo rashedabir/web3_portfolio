@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useLayoutEffect, useState } from "react";
 import Tilt from "react-tilt";
 import { motion } from "framer-motion";
 
@@ -7,6 +7,8 @@ import { eye } from "../assets";
 import { SectionWrapper } from "../hoc";
 import { projects } from "../constants";
 import { fadeIn, textVariant } from "../utils/motion";
+
+import client from "../Client";
 
 const ProjectCard = ({
   index,
@@ -28,7 +30,7 @@ const ProjectCard = ({
       >
         <div className="relative w-full h-[230px]">
           <img
-            src={image}
+            src={image?.asset?.url}
             alt="project_image"
             className="w-full h-full object-cover rounded-2xl"
           />
@@ -68,6 +70,29 @@ const ProjectCard = ({
 };
 
 const Works = () => {
+  const [projects, setProjects] = useState([]);
+
+  useLayoutEffect(() => {
+    client
+      .fetch(
+        `*[_type == "projects"]{
+      name,
+      description,
+      source_code_link,
+      tags,
+      image{
+        asset->{
+          _id,
+          url
+        },
+      },
+      hexCode,
+    }`
+      )
+      .then((data) => setProjects(data))
+      .catch((error) => console.error(error));
+  }, []);
+
   return (
     <>
       <motion.div variants={textVariant()}>
@@ -89,9 +114,11 @@ const Works = () => {
       </div>
 
       <div className="mt-20 flex flex-wrap gap-7">
-        {projects.map((project, index) => (
-          <ProjectCard key={`project-${index}`} index={index} {...project} />
-        ))}
+        {projects &&
+          projects.length > 0 &&
+          projects.map((project, index) => (
+            <ProjectCard key={`project-${index}`} index={index} {...project} />
+          ))}
       </div>
     </>
   );

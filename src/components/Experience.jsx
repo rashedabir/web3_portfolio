@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useLayoutEffect, useState } from "react";
 import {
   VerticalTimeline,
   VerticalTimelineElement,
@@ -6,6 +6,8 @@ import {
 import { motion } from "framer-motion";
 
 import "react-vertical-timeline-component/style.min.css";
+
+import client from "../Client";
 
 import { styles } from "../styles";
 import { experiences } from "../constants";
@@ -23,30 +25,30 @@ const ExperienceCard = ({ experience }) => {
       date={experience.date}
       iconStyle={{ background: experience.iconBg }}
       icon={
-        <div className='flex justify-center items-center w-full h-full'>
+        <div className="flex justify-center items-center w-full h-full">
           <img
-            src={experience.icon}
+            src={experience.icon?.asset?.url}
             alt={experience.company_name}
-            className='w-[60%] h-[60%] object-contain'
+            className="w-[60%] h-[60%] object-contain"
           />
         </div>
       }
     >
       <div>
-        <h3 className='text-white text-[24px] font-bold'>{experience.title}</h3>
+        <h3 className="text-white text-[24px] font-bold">{experience.title}</h3>
         <p
-          className='text-secondary text-[16px] font-semibold'
+          className="text-secondary text-[16px] font-semibold"
           style={{ margin: 0 }}
         >
           {experience.company_name}
         </p>
       </div>
 
-      <ul className='mt-5 list-disc ml-5 space-y-2'>
+      <ul className="mt-5 list-disc ml-5 space-y-2">
         {experience.points.map((point, index) => (
           <li
             key={`experience-point-${index}`}
-            className='text-white-100 text-[14px] pl-1 tracking-wider'
+            className="text-white-100 text-[14px] pl-1 tracking-wider"
           >
             {point}
           </li>
@@ -57,6 +59,30 @@ const ExperienceCard = ({ experience }) => {
 };
 
 const Experience = () => {
+  const [experiences, setExperiences] = useState([]);
+
+  useLayoutEffect(() => {
+    client
+      .fetch(
+        `*[_type == "experience"]{
+      title,
+      company_name,
+      iconBg,
+      date,
+      points,
+      icon{
+        asset->{
+          _id,
+          url
+        },
+      },
+      hexCode,
+    }`
+      )
+      .then((data) => setExperiences(data))
+      .catch((error) => console.error(error));
+  }, []);
+
   return (
     <>
       <motion.div variants={textVariant()}>
@@ -68,14 +94,16 @@ const Experience = () => {
         </h2>
       </motion.div>
 
-      <div className='mt-20 flex flex-col'>
+      <div className="mt-20 flex flex-col">
         <VerticalTimeline>
-          {experiences.map((experience, index) => (
-            <ExperienceCard
-              key={`experience-${index}`}
-              experience={experience}
-            />
-          ))}
+          {experiences &&
+            experiences.length > 0 &&
+            experiences.map((experience, index) => (
+              <ExperienceCard
+                key={`experience-${index}`}
+                experience={experience}
+              />
+            ))}
         </VerticalTimeline>
       </div>
     </>
