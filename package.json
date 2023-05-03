@@ -10,7 +10,7 @@
     "deploy": "firebase deploy"
   },
   "dependencies": {
-    "@emailjs/browser": "^3.10.0",
+    "@emailjs/browser": "^3.11.0",
     "@react-three/drei": "^9.56.24",
     "@react-three/fiber": "^8.11.1",
     "@sanity/client": "^5.4.2",
