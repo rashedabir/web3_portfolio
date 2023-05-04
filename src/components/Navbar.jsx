@@ -13,14 +13,13 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [developer, setDeveloper] = useState();
 
-  console.log({ developer });
-
   useLayoutEffect(() => {
     client
       .fetch(
         `*[_type == "hero"]{
       name,
       header_name,
+      github,
       lists,
       icon{
         asset->{
@@ -95,7 +94,7 @@ const Navbar = () => {
             >
               {nav.id == "github" ? (
                 <a
-                  href={`https://github.com/rashedabir`}
+                  href={developer?.github}
                   target="_blank"
                   className="flex gap-1 align-middle"
                 >
@@ -140,7 +139,7 @@ const Navbar = () => {
                   }}
                 >
                   {nav.id == "github" ? (
-                    <a href={`https://github.com/rashedabir`} target="_blank">
+                    <a href={developer?.github} target="_blank">
                       {nav.title}
                     </a>
                   ) : (

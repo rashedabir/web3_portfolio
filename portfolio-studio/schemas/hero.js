@@ -24,6 +24,11 @@ export default {
       validation: (Rule) => Rule.required(),
     },
     {
+      title: 'Github Link',
+      name: 'github',
+      type: 'string',
+    },
+    {
       name: 'lists',
       title: 'Lists',
       type: 'array',
