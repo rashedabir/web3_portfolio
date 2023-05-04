@@ -1,7 +1,7 @@
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-import { close, menu } from "../assets";
+import { close, menu, github } from "../assets";
 import { navLinks } from "../constants";
 import { styles } from "../styles";
 
@@ -87,9 +87,29 @@ const Navbar = () => {
               className={`${
                 active === nav.title ? "text-white" : "text-secondary"
               } hover:text-white text-[18px] font-medium cursor-pointer`}
-              onClick={() => setActive(nav.title)}
+              onClick={() => {
+                if (nav.id != "github") {
+                  setActive(nav.title);
+                }
+              }}
             >
-              <a href={`#${nav.id}`}>{nav.title}</a>
+              {nav.id == "github" ? (
+                <a
+                  href={`https://github.com/rashedabir`}
+                  target="_blank"
+                  className="flex gap-1 align-middle"
+                >
+                  <img
+                    src={github}
+                    alt=""
+                    className="w-5 h-5 opacity-70 hover:opacity-100"
+                    style={{ marginTop: "2.5px" }}
+                  />
+                  <span>{nav.title}</span>
+                </a>
+              ) : (
+                <a href={`#${nav.id}`}>{nav.title}</a>
+              )}
             </li>
           ))}
         </ul>
@@ -119,7 +139,13 @@ const Navbar = () => {
                     setActive(nav.title);
                   }}
                 >
-                  <a href={`#${nav.id}`}>{nav.title}</a>
+                  {nav.id == "github" ? (
+                    <a href={`https://github.com/rashedabir`} target="_blank">
+                      {nav.title}
+                    </a>
+                  ) : (
+                    <a href={`#${nav.id}`}>{nav.title}</a>
+                  )}
                 </li>
               ))}
             </ul>
