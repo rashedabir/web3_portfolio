@@ -6,8 +6,37 @@ import { eye } from "../assets";
 import { SectionWrapper } from "../hoc";
 import { styles } from "../styles";
 import { fadeIn, textVariant } from "../utils/motion";
-
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import client from "../Client";
+import Slider from "react-slick";
+
+const settings = {
+  dots: true,
+  infinite: true,
+  speed: 500,
+  slidesToShow: 3,
+  slidesToScroll: 3,
+  nextArrow: <IoIosArrowBack />,
+  prevArrow: <IoIosArrowForward />,
+  autoplay: true, // Enable autoplay
+  autoplaySpeed: 7000, // Set autoplay speed in milliseconds (1 second in this case)
+  responsive: [
+    {
+      breakpoint: 1024, // screensize >= 1024px
+      settings: {
+        slidesToShow: 2,
+        slidesToScroll: 2,
+      },
+    },
+    {
+      breakpoint: 768, // screensize >= 768px
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1,
+      },
+    },
+  ],
+};
 
 const ProjectCard = ({
   index,
@@ -113,19 +142,21 @@ const Works = () => {
         </motion.p>
       </div>
 
-      <div className="mt-20 flex flex-wrap gap-7">
-        {projects &&
-          projects.length > 0 &&
-          projects
-            .slice(0)
-            .sort((a, b) => Number(a.order) - Number(b.order))
-            .map((project, index) => (
-              <ProjectCard
-                key={`project-${index}`}
-                index={index}
-                {...project}
-              />
-            ))}
+      <div className="mt-20">
+        <Slider {...settings}>
+          {projects &&
+            projects.length > 0 &&
+            projects
+              .slice(0)
+              .sort((a, b) => Number(a.order) - Number(b.order))
+              .map((project, index) => (
+                <ProjectCard
+                  key={`project-${index}`}
+                  index={index}
+                  {...project}
+                />
+              ))}
+        </Slider>
       </div>
     </>
   );

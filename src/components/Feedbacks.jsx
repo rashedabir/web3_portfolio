@@ -4,8 +4,38 @@ import React, { useLayoutEffect, useState } from "react";
 import { SectionWrapper } from "../hoc";
 import { styles } from "../styles";
 import { fadeIn, textVariant } from "../utils/motion";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
 import client from "../Client";
+import Slider from "react-slick";
+
+const settings = {
+  dots: true,
+  infinite: true,
+  speed: 500,
+  slidesToShow: 3,
+  slidesToScroll: 3,
+  nextArrow: <IoIosArrowBack />,
+  prevArrow: <IoIosArrowForward />,
+  autoplay: true, // Enable autoplay
+  autoplaySpeed: 7000, // Set autoplay speed in milliseconds (1 second in this case)
+  responsive: [
+    {
+      breakpoint: 1024, // screensize >= 1024px
+      settings: {
+        slidesToShow: 2,
+        slidesToScroll: 2,
+      },
+    },
+    {
+      breakpoint: 768, // screensize >= 768px
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1,
+      },
+    },
+  ],
+};
 
 const FeedbackCard = ({
   index,
@@ -78,16 +108,18 @@ const Feedbacks = () => {
           <h2 className={styles.sectionHeadText}>Testimonials.</h2>
         </motion.div>
       </div>
-      <div className={`-mt-20 pb-14 ${styles.paddingX} flex flex-wrap gap-7`}>
-        {testimonials &&
-          testimonials.length > 0 &&
-          testimonials.map((testimonial, index) => (
-            <FeedbackCard
-              key={testimonial.name}
-              index={index}
-              {...testimonial}
-            />
-          ))}
+      <div className={`-mt-20 pb-14 ${styles.paddingX}`}>
+        <Slider {...settings}>
+          {testimonials &&
+            testimonials.length > 0 &&
+            testimonials.map((testimonial, index) => (
+              <FeedbackCard
+                key={testimonial.name}
+                index={index}
+                {...testimonial}
+              />
+            ))}
+        </Slider>
       </div>
     </div>
   );
