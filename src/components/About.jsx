@@ -6,6 +6,7 @@ import { styles } from "../styles";
 import { SectionWrapper } from "../hoc";
 import { fadeIn, textVariant } from "../utils/motion";
 import client from "../Client";
+import Grid from "./Grid";
 
 const ServiceCard = ({ index, name, icon }) => (
   <Tilt className="xs:w-[250px] w-full">
@@ -36,6 +37,7 @@ const ServiceCard = ({ index, name, icon }) => (
 const About = () => {
   const [services, setServices] = useState([]);
   const [text, setText] = useState();
+  const [currentStatus, setCurrentStatus] = useState();
 
   useLayoutEffect(() => {
     client
@@ -61,14 +63,17 @@ const About = () => {
       .fetch(
         `*[_type == "about"]{
       text,
+      current_status,
       hexCode,
     }`
       )
       .then((data) => {
         if (data) {
           setText(data[0]?.text);
+          setCurrentStatus(data[0]?.current_status);
         } else {
           setText("");
+          setCurrentStatus("");
         }
       })
       .catch((error) => console.error(error));
@@ -100,6 +105,8 @@ const About = () => {
               <ServiceCard key={service.name} index={index} {...service} />
             ))}
       </div>
+
+      <Grid currentStatus={currentStatus} />
     </>
   );
 };

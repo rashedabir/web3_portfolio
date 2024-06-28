@@ -8,6 +8,8 @@ import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
 import client from "../Client";
 import Slider from "react-slick";
+import { InfiniteMovingCards } from "./ui/InfiniteMovingCards";
+import { testimonialss } from "../constants";
 
 const settings = {
   dots: true,
@@ -99,7 +101,7 @@ const Feedbacks = () => {
   }, []);
 
   return (
-    <div className={`mt-12 bg-black-100 rounded-[20px]`}>
+    <div className={`mt-12 bg-black-100 rounded-[20px] `}>
       <div
         className={`bg-tertiary rounded-2xl ${styles.padding} min-h-[300px]`}
       >
@@ -109,17 +111,19 @@ const Feedbacks = () => {
         </motion.div>
       </div>
       <div className={`-mt-20 pb-14 ${styles.paddingX}`}>
-        <Slider {...settings}>
-          {testimonials &&
-            testimonials.length > 0 &&
-            testimonials.map((testimonial, index) => (
-              <FeedbackCard
-                key={testimonial.name}
-                index={index}
-                {...testimonial}
-              />
-            ))}
-        </Slider>
+        {
+          <Slider {...settings}>
+            {testimonials &&
+              testimonials.length > 0 &&
+              testimonials.map((testimonial, index) => (
+                <FeedbackCard
+                  key={testimonial.name}
+                  index={index}
+                  {...testimonial}
+                />
+              ))}
+          </Slider>
+        }
       </div>
     </div>
   );

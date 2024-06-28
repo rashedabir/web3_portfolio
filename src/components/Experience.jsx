@@ -12,6 +12,7 @@ import client from "../Client";
 import { SectionWrapper } from "../hoc";
 import { styles } from "../styles";
 import { textVariant } from "../utils/motion";
+import Approach from "./Approach";
 
 const ExperienceCard = ({ experience }) => {
   return (
@@ -109,6 +110,7 @@ const Experience = () => {
               ))}
         </VerticalTimeline>
       </div>
+      <Approach />
     </>
   );
 };
