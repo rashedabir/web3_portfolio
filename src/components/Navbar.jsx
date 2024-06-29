@@ -92,20 +92,10 @@ const Navbar = () => {
                 }
               }}
             >
-              {nav.id == "github" ? (
-                <a
-                  href={developer?.github}
-                  target="_blank"
-                  className="flex gap-1 align-middle"
-                >
-                  <img
-                    src={github}
-                    alt=""
-                    className="w-5 h-5 opacity-70 hover:opacity-100"
-                    style={{ marginTop: "2.5px" }}
-                  />
-                  <span>{nav.title}</span>
-                </a>
+              {nav.id == "blog" ? (
+                <Link to={"/blogs"} className="flex gap-1 align-middle">
+                  {nav.title}
+                </Link>
               ) : (
                 <a href={`#${nav.id}`}>{nav.title}</a>
               )}
@@ -138,12 +128,10 @@ const Navbar = () => {
                     setActive(nav.title);
                   }}
                 >
-                  {nav.id == "github" ? (
-                    <a href={developer?.github} target="_blank">
-                      {nav.title}
-                    </a>
+                  {nav.id == "blog" ? (
+                    <Link to={"/blogs"}>{nav.title}</Link>
                   ) : (
-                    <a href={`#${nav.id}`}>{nav.title}</a>
+                    <a href={`/#${nav.id}`}>{nav.title}</a>
                   )}
                 </li>
               ))}

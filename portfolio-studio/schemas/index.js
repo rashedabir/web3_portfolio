@@ -6,6 +6,8 @@ import testimonials from './testimonials'
 import about from './about'
 import hero from './hero'
 import approach from './approach'
+import blog from './blog'
+import blogcategory from './blogcategory'
 
 export const schemaTypes = [
   hero,
@@ -16,4 +18,6 @@ export const schemaTypes = [
   experience,
   testimonials,
   approach,
+  blog,
+  blogcategory,
 ]

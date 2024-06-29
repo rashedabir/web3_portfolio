@@ -2,6 +2,7 @@
 "use client";
 import React, { useState } from "react";
 import { IoCopyOutline } from "react-icons/io5";
+import GitHubCalendar from "react-github-calendar";
 
 // Also install this npm i --save-dev @types/react-lottie
 import Lottie from "react-lottie";
@@ -73,14 +74,26 @@ export const BentoGridItem = ({
       }}
     >
       {/* add img divs */}
-      <div className={`${id === 6 && "flex justify-center"} h-full`}>
+      <div className={`${id === 6 && "flex justify-center"} h-full relative`}>
         <div className="absolute w-full h-full">
-          {img && (
+          {img && id != 4 && (
             <img
               src={img}
               alt={img}
               className={cn(imgClassName, "object-cover object-center ")}
             />
+          )}
+          {id == 4 && (
+            <div
+              style={{
+                position: "absolute",
+                right: 10,
+                bottom: 10,
+                opacity: 0.5,
+              }}
+            >
+              <GitHubCalendar username="rashedabir" blockSize={4} />
+            </div>
           )}
         </div>
         <div
@@ -88,7 +101,7 @@ export const BentoGridItem = ({
             id === 5 && "w-full opacity-80"
           } `}
         >
-          {spareImg && (
+          {spareImg && id != 4 && (
             <img
               src={spareImg}
               alt={spareImg}

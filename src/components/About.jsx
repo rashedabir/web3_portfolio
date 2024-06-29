@@ -79,8 +79,6 @@ const About = () => {
       .catch((error) => console.error(error));
   }, []);
 
-  console.log({ services });
-
   return (
     <>
       <motion.div variants={textVariant()}>

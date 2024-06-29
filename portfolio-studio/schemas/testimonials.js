@@ -17,6 +17,11 @@ export default {
       validation: (Rule) => Rule.required(),
     },
     {
+      title: 'Link',
+      name: 'link',
+      type: 'string',
+    },
+    {
       title: 'Designation',
       name: 'designation',
       type: 'string',
