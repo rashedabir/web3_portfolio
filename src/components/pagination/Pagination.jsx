@@ -11,7 +11,6 @@ const Pagination = ({ page, hasPrev, hasNext, callback, setCallback }) => {
         disabled={!hasPrev}
         onClick={() => {
           navigate(`?page=${Number(page) - 1}`);
-          setCallback(!callback);
         }}
       >
         Previous
@@ -21,7 +20,6 @@ const Pagination = ({ page, hasPrev, hasNext, callback, setCallback }) => {
         className={styles.button}
         onClick={() => {
           navigate(`?page=${Number(page) + 1}`);
-          setCallback(!callback);
         }}
       >
         Next

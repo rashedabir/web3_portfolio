@@ -2,6 +2,17 @@ import React, { useEffect, useLayoutEffect, useState } from "react";
 import client from "../../Client";
 import Card from "../card/Card";
 import Pagination from "../pagination/Pagination";
+import animationData from "./notfound.json";
+import Lottie from "react-lottie";
+
+const defaultOptions = {
+  loop: true,
+  autoplay: true,
+  animationData: animationData,
+  rendererSettings: {
+    preserveAspectRatio: "xMidYMid slice",
+  },
+};
 
 const cardList = ({ start, category, limit }) => {
   const [blogs, setBlogs] = useState([]);
@@ -14,7 +25,7 @@ const cardList = ({ start, category, limit }) => {
     const categoryFilter = category
       ? `&& blogcategory._ref == "${category}"`
       : "";
-    const query = `*[_type == "blog" ${categoryFilter}] | order(_createdAt desc) [${start}...${
+    const query = `*[_type == "blog" && feature == false ${categoryFilter}] | order(_createdAt desc) [${start}...${
       start + limit
     }]{
       _id,
@@ -73,9 +84,16 @@ const cardList = ({ start, category, limit }) => {
       </h1>
 
       <div className={""}>
-        {blogs?.map((item, i) => (
-          <Card item={item} key={i} />
-        ))}
+        {blogs && blogs.length > 0 ? (
+          blogs?.map((item, i) => <Card item={item} key={i} />)
+        ) : (
+          <div className="no_data_dashboard">
+            {animationData && (
+              <Lottie options={defaultOptions} height={"20%"} width={"25%"} />
+            )}
+            <h4>No Data Found!</h4>
+          </div>
+        )}
       </div>
       {totalCount > limit && (
         <Pagination

@@ -242,12 +242,12 @@ const projects = [
 const socialMedia = [
   {
     id: 1,
-    img: "./git.svg",
+    img: "https://rashed-abir.web.app/git.svg",
     link: "https://github.com/rashedabir",
   },
   {
     id: 3,
-    img: "./link.svg",
+    img: "https://rashed-abir.web.app/link.svg",
     link: "https://www.linkedin.com/in/rashedabir",
   },
 ];

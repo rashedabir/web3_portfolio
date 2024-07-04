@@ -44,7 +44,7 @@ const Card = ({ item, key }) => {
             {item.title}
           </Link>
           {/* <p className={styles.desc}>{item.desc.substring(0, 60)}</p> */}
-          <div className="desc">
+          <div className="sm:text-[18px] text-[14px] text-secondary desc">
             <BlockContent blocks={item.body} serializers={serializers} />
           </div>
           <Link to={`/blog/posts/${item.slug}`} className={"link"}>
