@@ -97,7 +97,7 @@ const Navbar = () => {
                   {nav.title}
                 </Link>
               ) : (
-                <a href={`#${nav.id}`}>{nav.title}</a>
+                <a href={`/#${nav.id}`}>{nav.title}</a>
               )}
             </li>
           ))}
