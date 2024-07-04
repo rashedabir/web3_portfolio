@@ -14,7 +14,7 @@ const Featured = () => {
           className="-top-40 -left-10 md:-left-32 md:-top-20 h-screen"
           fill="purple"
         />
-        <Spotlight className="left-80 top-28 h-[80vh] w-[50vw]" fill="blue" />
+        <Spotlight className="left-80 top-28 h-[80vh] w-[25vw]" fill="blue" />
       </div>
       <h1 className="text-white font-black md:text-[60px] sm:text-[50px] xs:text-[40px] text-[30px]">
         <b>Hey, rashed khan here!</b> Discover my stories and creative ideas.

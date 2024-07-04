@@ -4,6 +4,8 @@ import { useParams } from "react-router-dom";
 import client from "./Client";
 import BlockContent from "@sanity/block-content-to-react";
 import Menu from "./components/menu/Menu";
+import { FaCopy } from "react-icons/fa";
+import ReactDOM from "react-dom";
 
 // Custom serializer for code blocks
 // Custom serializer for code blocks
@@ -33,6 +35,35 @@ const serializers = {
     code: CodeSpan,
     // Add serializers for other marks if needed
   },
+};
+
+const BlogDescription = ({ blocks }) => {
+  useEffect(() => {
+    const codeBlocks = document.querySelectorAll(".blog_description code");
+    codeBlocks.forEach((block) => {
+      if (!block.querySelector(".copy-button")) {
+        const button = document.createElement("button");
+        button.className = "copy-button";
+        const iconElement = document.createElement("div");
+        ReactDOM.render(<FaCopy />, iconElement);
+        button.appendChild(iconElement);
+        button.addEventListener("click", () => {
+          navigator.clipboard
+            .writeText(block.textContent)
+            .then(() => {})
+            .catch((err) => console.error("Failed to copy: ", err));
+        });
+        block.appendChild(button);
+      }
+    });
+    return () => {
+      codeBlocks.forEach((block) => {
+        block.removeChild(block.querySelector(".copy-button"));
+      });
+    };
+  }, [blocks]);
+
+  return <BlockContent blocks={blocks} className="blog_description" />;
 };
 
 const BlogPost = () => {
@@ -81,7 +112,7 @@ const BlogPost = () => {
   useEffect(() => {
     fetchBlogDetails();
   }, [slug]);
-  console.log(blog);
+
   return (
     <div className="relative z-0 bg-primary">
       <div className="bg-hero-pattern bg-cover bg-no-repeat bg-center">
@@ -121,12 +152,12 @@ const BlogPost = () => {
             </div>
           )}
         </div>
-        <div className={`grid grid-cols-12 gap-20`}>
+        <div className={`lg:grid grid-cols-12 gap-20 w-full`}>
           <div className={`post col-span-8`}>
-            <BlockContent
+            <BlogDescription
               blocks={blog?.body}
               //   serializers={serializers}
-              className={"description"}
+              className={"blog_description"}
             />
           </div>
           <div className="col-span-4">

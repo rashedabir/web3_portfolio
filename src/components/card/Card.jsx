@@ -32,7 +32,7 @@ const Card = ({ item, key }) => {
             <img src={item.image.asset.url} alt="" fill className={`image`} />
           </div>
         )}
-        <div className={"textContainer"}>
+        <div className={"textContainer w-[100%]"}>
           <div className={"detail"}>
             <span className={"date"}>{item.date}</span> {" - "}
             <span className={"category"}>{item.blogcategory.title}</span>
