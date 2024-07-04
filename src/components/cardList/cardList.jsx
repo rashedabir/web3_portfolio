@@ -36,6 +36,7 @@ const cardList = ({ start, category, limit }) => {
       date,
       feature,
       blogcategory->{
+      _id,
       title,
       bg_color
     },
@@ -58,7 +59,7 @@ const cardList = ({ start, category, limit }) => {
     const categoryFilter = category
       ? `&& blogcategory._ref == "${category}"`
       : "";
-    const countQuery = `count(*[_type == "blog"] ${categoryFilter})`;
+    const countQuery = `count(*[_type == "blog"] && feature == false ${categoryFilter})`;
     const totalCount = await client.fetch(countQuery);
     setTotalCount(totalCount);
   };

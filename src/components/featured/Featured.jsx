@@ -26,6 +26,14 @@ const serializers = {
   },
 };
 
+// Utility function to extract plain text from Portable Text
+const extractPlainText = (blocks) => {
+  return blocks
+    ?.filter((block) => block._type === "block" && block.children)
+    ?.map((block) => block.children.map((child) => child.text).join(""))
+    ?.join("\n\n");
+};
+
 const Featured = () => {
   const [blogs, setBlogs] = useState();
   const navigate = useNavigate();
@@ -72,29 +80,37 @@ const Featured = () => {
         />
         <Spotlight className="left-80 top-28 h-[80vh] w-[25vw]" fill="blue" />
       </div>
-      <h1 className="text-white font-black md:text-[60px] sm:text-[50px] xs:text-[40px] text-[30px]">
+      <h1 className="text-white font-black md:text-[60px] sm:text-[50px] xs:text-[40px] text-[30px] mb-12">
         <b>Hey, rashed khan here!</b> Discover my stories and creative ideas.
       </h1>
-      <div className={"post"}>
-        <div className={"imgContainer"}>
-          <img src={blogs?.image?.asset?.url} alt="" fill className={"image"} />
-        </div>
-        <div className={"textContainer"}>
-          <h1 className="text-white font-medium lg:text-[30px] sm:text-[26px] xs:text-[20px] text-[16px] lg:leading-[40px]">
-            {blogs?.title}
-          </h1>
-          <div className="sm:text-[18px] text-[14px] text-secondary desc">
-            <BlockContent blocks={blogs?.body} serializers={serializers} />
+      <div className={"lg:grid grid-cols-12 gap-12 items-center w-full"}>
+        <div className={"col-span-6"}>
+          <div className="lg:h-[400px] xs:h-[300px] lg:w-full xs:w-full xs:mb-5 lg:mb-0">
+            <img
+              src={blogs?.image?.asset?.url}
+              alt={blogs?.title}
+              className="h-full w-full object-cover rounded-[5px]"
+            />
           </div>
-          <button
-            className={`button bg-[#1D1836]`}
-            type="button"
-            onClick={() => {
-              navigate(`/blog/posts/${blogs?.slug}`);
-            }}
-          >
-            Read More
-          </button>
+        </div>
+        <div className={"col-span-6"}>
+          <div className="flex flex-col gap-5">
+            <h1 className="text-white font-medium lg:text-[30px] sm:text-[26px] xs:text-[20px] text-[16px] lg:leading-[40px] xs:mt-5">
+              {blogs?.title}
+            </h1>
+            <div className="sm:text-[18px] text-[14px] text-secondary desc">
+              {extractPlainText(blogs?.body)}
+            </div>
+            <button
+              className={`button bg-[#1D1836]`}
+              type="button"
+              onClick={() => {
+                navigate(`/blog/posts/${blogs?.slug}`);
+              }}
+            >
+              Read More
+            </button>
+          </div>
         </div>
       </div>
     </div>

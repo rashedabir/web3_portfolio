@@ -63,7 +63,14 @@ const BlogDescription = ({ blocks }) => {
     };
   }, [blocks]);
 
-  return <BlockContent blocks={blocks} className="blog_description" />;
+  return (
+    <BlockContent
+      blocks={blocks}
+      className="blog_description"
+      dataset={"production"}
+      projectId={"nbs6byyr"}
+    />
+  );
 };
 
 const BlogPost = () => {

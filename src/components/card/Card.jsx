@@ -23,19 +23,47 @@ const serializers = {
   },
 };
 
+// Utility function to extract plain text from Portable Text
+const extractPlainText = (blocks) => {
+  return blocks
+    ?.filter((block) => block._type === "block" && block.children)
+    ?.map((block) => block.children.map((child) => child.text).join(""))
+    ?.join("\n\n");
+};
+
 const Card = ({ item, key }) => {
+  const plainText = extractPlainText(item?.body);
   return (
-    <div className={"blogCard"} key={key}>
-      <div className="wrapper">
+    <div className={"blogCard mb-10"} key={key}>
+      <div className="md:grid grid-cols-12 md:gap-10 items-center w-full">
         {item.image.asset && (
-          <div className={"imageContainer"}>
-            <img src={item.image.asset.url} alt="" fill className={`image`} />
+          <div className="lg:col-span-6 md:col-span-6 sm:col-span-12 xs:col-span-12">
+            <div
+              className={
+                "lg:h-[350px] xs:h-[250px] lg:w-full xs:w-full xs:mb-5 lg:mb-0"
+              }
+            >
+              <img
+                src={item.image.asset.url}
+                alt=""
+                className="h-full w-full object-fill rounded-[5px]"
+              />
+            </div>
           </div>
         )}
-        <div className={"textContainer w-[100%]"}>
-          <div className={"detail"}>
+        <div
+          className={
+            "lg:col-span-6 md:col-span-6 sm:col-span-12 xs:col-span-12 flex flex-col gap-5"
+          }
+        >
+          <div className={"flex flex-row gap-3"}>
             <span className={"date"}>{item.date}</span> {" - "}
-            <span className={"category"}>{item.blogcategory.title}</span>
+            <Link
+              to={`/blogs?cat=${item.blogcategory._id}`}
+              className={"category"}
+            >
+              {item.blogcategory.title}
+            </Link>
           </div>
           <Link
             to={`/blog/posts/${item.slug}`}
@@ -45,7 +73,7 @@ const Card = ({ item, key }) => {
           </Link>
           {/* <p className={styles.desc}>{item.desc.substring(0, 60)}</p> */}
           <div className="sm:text-[18px] text-[14px] text-secondary desc">
-            <BlockContent blocks={item.body} serializers={serializers} />
+            {plainText}
           </div>
           <Link to={`/blog/posts/${item.slug}`} className={"link"}>
             Read More
