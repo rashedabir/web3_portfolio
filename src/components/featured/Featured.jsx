@@ -1,9 +1,9 @@
+import { motion } from "framer-motion";
 import React, { useEffect, useState } from "react";
-import { SectionWrapper } from "../../hoc";
-import { Spotlight } from "../ui/Spotlight";
-import client from "../../Client";
-import BlockContent from "@sanity/block-content-to-react";
 import { useNavigate } from "react-router-dom";
+import client from "../../Client";
+import { fadeIn } from "../../utils/motion";
+import { Spotlight } from "../ui/Spotlight";
 
 // Optional: Define serializers for custom rendering of Portable Text
 const serializers = {
@@ -68,52 +68,54 @@ const Featured = () => {
     fetchBlogs();
   }, []);
   return (
-    <div className="blogFeature max-w-7xl mx-auto z-0 sm:px-16 px-6 relative pt-[110px]">
-      <div className="overflow-hidden">
-        <Spotlight
-          className="-top-40 -left-10 md:-left-32 md:-top-20 h-screen"
-          fill="white"
-        />
-        <Spotlight
-          className="-top-40 -left-10 md:-left-32 md:-top-20 h-screen"
-          fill="purple"
-        />
-        <Spotlight className="left-80 top-28 h-[80vh] w-[25vw]" fill="blue" />
-      </div>
-      <h1 className="text-white font-black md:text-[60px] sm:text-[50px] xs:text-[40px] text-[30px] mb-12">
-        <b>Hey, rashed khan here!</b> Discover my stories and creative ideas.
-      </h1>
-      <div className={"lg:grid grid-cols-12 gap-12 items-center w-full"}>
-        <div className={"col-span-6"}>
-          <div className="lg:h-[400px] xs:h-[300px] lg:w-full xs:w-full xs:mb-5 lg:mb-0">
-            <img
-              src={blogs?.image?.asset?.url}
-              alt={blogs?.title}
-              className="h-full w-full object-cover rounded-[5px]"
-            />
-          </div>
+    <motion.div variants={fadeIn("up", "spring", 1 * 0.5, 0.75)}>
+      <div className="blogFeature max-w-7xl mx-auto z-0 sm:px-16 px-6 relative pt-[110px]">
+        <div className="overflow-hidden">
+          <Spotlight
+            className="-top-40 -left-10 md:-left-32 md:-top-20 h-screen"
+            fill="white"
+          />
+          <Spotlight
+            className="-top-40 -left-10 md:-left-32 md:-top-20 h-screen"
+            fill="purple"
+          />
+          <Spotlight className="left-80 top-28 h-[80vh] w-[25vw]" fill="blue" />
         </div>
-        <div className={"col-span-6"}>
-          <div className="flex flex-col gap-5">
-            <h1 className="text-white font-medium lg:text-[30px] sm:text-[26px] xs:text-[20px] text-[16px] lg:leading-[40px] xs:mt-5">
-              {blogs?.title}
-            </h1>
-            <div className="sm:text-[18px] text-[14px] text-secondary desc">
-              {extractPlainText(blogs?.body)}
+        <h1 className="text-white font-black md:text-[60px] sm:text-[50px] xs:text-[40px] text-[30px] mb-12">
+          <b>Hey, rashed khan here!</b> Discover my stories and creative ideas.
+        </h1>
+        <div className={"lg:grid grid-cols-12 gap-12 items-center w-full"}>
+          <div className={"col-span-6"}>
+            <div className="lg:h-[400px] xs:h-[300px] lg:w-full xs:w-full xs:mb-5 lg:mb-0">
+              <img
+                src={blogs?.image?.asset?.url}
+                alt={blogs?.title}
+                className="h-full w-full object-cover rounded-[5px]"
+              />
             </div>
-            <button
-              className={`button bg-[#1D1836]`}
-              type="button"
-              onClick={() => {
-                navigate(`/blog/posts/${blogs?.slug}`);
-              }}
-            >
-              Read More
-            </button>
+          </div>
+          <div className={"col-span-6"}>
+            <div className="flex flex-col gap-5">
+              <h1 className="text-white font-medium lg:text-[30px] sm:text-[26px] xs:text-[20px] text-[16px] lg:leading-[40px] xs:mt-5">
+                {blogs?.title}
+              </h1>
+              <div className="sm:text-[18px] text-[14px] text-secondary desc">
+                {extractPlainText(blogs?.body)}
+              </div>
+              <button
+                className={`button bg-[#1D1836]`}
+                type="button"
+                onClick={() => {
+                  navigate(`/blog/posts/${blogs?.slug}`);
+                }}
+              >
+                Read More
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

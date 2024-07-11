@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
-import { Footer, Navbar } from "./components";
-import Featured from "./components/featured/Featured";
-import CategoryList from "./components/categoryList/CategoryList";
-import CardList from "./components/cardList/cardList";
+import React from "react";
 import { useLocation } from "react-router-dom";
+import { Footer, Navbar } from "./components";
+import CardList from "./components/cardList/cardList";
+import CategoryList from "./components/categoryList/CategoryList";
+import Featured from "./components/featured/Featured";
 
 const Blogs = () => {
   const location = useLocation();

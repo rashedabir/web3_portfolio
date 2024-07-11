@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import BlockContent from "@sanity/block-content-to-react";
+import { motion } from "framer-motion";
+import { fadeIn } from "../../utils/motion";
 
 // Optional: Define serializers for custom rendering of Portable Text
 const serializers = {
@@ -34,7 +35,11 @@ const extractPlainText = (blocks) => {
 const Card = ({ item, key }) => {
   const plainText = extractPlainText(item?.body);
   return (
-    <div className={"blogCard mb-10"} key={key}>
+    <motion.div
+      className={"blogCard mb-10"}
+      key={key}
+      variants={fadeIn("down", "spring", key * 0.5, 0.75)}
+    >
       <div className="md:grid grid-cols-12 md:gap-10 items-center w-full">
         {item.image.asset && (
           <div className="lg:col-span-6 md:col-span-6 sm:col-span-12 xs:col-span-12">
@@ -80,7 +85,7 @@ const Card = ({ item, key }) => {
           </Link>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

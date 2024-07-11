@@ -1,7 +1,8 @@
 import React, { useLayoutEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import client from "../../Client";
-import styles from "./categoryList.module.css";
+import { motion } from "framer-motion";
+import { fadeIn } from "../../utils/motion";
 
 const CategoryList = () => {
   const [category, setCategory] = useState([]);
@@ -27,16 +28,21 @@ const CategoryList = () => {
       >
         Popular Categories
       </h1>
-      <div className={styles.categories}>
-        {category?.map((item) => (
-          <Link
-            to={`/blogs?cat=${item._id}`}
-            className={`${styles.category}`}
+      <div className={`flex flex-wrap justify-between gap-[20px]`}>
+        {category?.map((item, index) => (
+          <motion.div
+            className={`flex items-center justify-center w-[15%] h-[80px] rounded-[10px] text-white gap-[10px]`}
             style={{ background: item.bg_color }}
             key={item}
+            variants={fadeIn("right", "spring", index * 0.5, 0.75)}
           >
-            {item.title}
-          </Link>
+            <Link
+              to={`/blogs?cat=${item._id}`}
+              className="w-full h-full text-center align-middle flex justify-center items-center"
+            >
+              {item.title}
+            </Link>
+          </motion.div>
         ))}
       </div>
     </div>
