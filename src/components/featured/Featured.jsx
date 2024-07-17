@@ -68,7 +68,7 @@ const Featured = () => {
     fetchBlogs();
   }, []);
   return (
-    <motion.div variants={fadeIn("up", "spring", 1 * 0.5, 0.75)}>
+    <motion.div variants={fadeIn("", "spring", 1 * 0.5, 0.75)}>
       <div className="blogFeature max-w-7xl mx-auto z-0 sm:px-16 px-6 relative pt-[110px]">
         <div className="overflow-hidden">
           <Spotlight

@@ -11,7 +11,8 @@ import { BackgroundGradientAnimation } from "./GradientBg";
 import GridGlobe from "./GridGlobe";
 import animationData from "../../assets/confetti.json";
 import MagicButton from "./MagicButton";
-import { cn } from "../../utils/motion";
+import { cn, fadeIn } from "../../utils/motion";
+import { motion } from "framer-motion";
 
 export const BentoGrid = ({ className, children }) => {
   return (
@@ -37,6 +38,7 @@ export const BentoGridItem = ({
   imgClassName,
   titleClassName,
   spareImg,
+  index,
 }) => {
   const leftLists = ["ReactJS", "Express", "Typescript"];
   const rightLists = ["NestJS", "NextJS", "TypeORM"];
@@ -59,7 +61,8 @@ export const BentoGridItem = ({
   };
 
   return (
-    <div
+    <motion.div
+      variants={fadeIn("", "spring", index * 0.5, 0.75)}
       className={cn(
         // remove p-4 rounded-3xl dark:bg-black dark:border-white/[0.2] bg-white  border border-transparent, add border border-white/[0.1] overflow-hidden relative
         "row-span-1 relative overflow-hidden rounded-3xl border border-white/[0.1] group/bento hover:shadow-xl transition duration-200 shadow-input dark:shadow-none justify-between flex flex-col space-y-4",
@@ -194,6 +197,6 @@ export const BentoGridItem = ({
           )}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };

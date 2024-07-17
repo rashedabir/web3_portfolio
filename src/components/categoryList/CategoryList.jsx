@@ -31,10 +31,10 @@ const CategoryList = () => {
       <div className={`flex flex-wrap justify-between gap-[20px]`}>
         {category?.map((item, index) => (
           <motion.div
+            variants={fadeIn("right", "spring", index * 0.5, 0.75)}
             className={`flex items-center justify-center w-[15%] h-[80px] rounded-[10px] text-white gap-[10px]`}
             style={{ background: item.bg_color }}
             key={item}
-            variants={fadeIn("right", "spring", index * 0.5, 0.75)}
           >
             <Link
               to={`/blogs?cat=${item._id}`}
