@@ -6,12 +6,14 @@ import BlockContent from "@sanity/block-content-to-react";
 import Menu from "./components/menu/Menu";
 import { FaCopy } from "react-icons/fa";
 import ReactDOM from "react-dom";
+import { motion } from "framer-motion";
+import { fadeIn, textVariant } from "./utils/motion";
 
-// Custom serializer for code blocks
 // Custom serializer for code blocks
 const CodeSpan = ({ children }) => (
   <code className="code-span">{children}</code>
 );
+
 // Optional: Define serializers for custom rendering of Portable Text
 const serializers = {
   types: {
@@ -29,11 +31,9 @@ const serializers = {
           return <p>{props.children}</p>;
       }
     },
-    // Add serializers for other types if needed
   },
   marks: {
     code: CodeSpan,
-    // Add serializers for other marks if needed
   },
 };
 
@@ -58,18 +58,25 @@ const BlogDescription = ({ blocks }) => {
     });
     return () => {
       codeBlocks.forEach((block) => {
-        block.removeChild(block.querySelector(".copy-button"));
+        const copyButton = block.querySelector(".copy-button");
+        if (copyButton) block.removeChild(copyButton);
       });
     };
   }, [blocks]);
 
   return (
-    <BlockContent
-      blocks={blocks}
-      className="blog_description"
-      dataset={"production"}
-      projectId={"nbs6byyr"}
-    />
+    <motion.div
+      variants={fadeIn("up", "spring", 0.3, 1)}
+      initial="hidden"
+      animate="show"
+    >
+      <BlockContent
+        blocks={blocks}
+        className="blog_description"
+        dataset={"production"}
+        projectId={"nbs6byyr"}
+      />
+    </motion.div>
   );
 };
 
@@ -126,50 +133,77 @@ const BlogPost = () => {
         <Navbar />
       </div>
       <div className="max-w-7xl mx-auto z-0 px-6 relative pt-[110px]">
-        <div className={"infoContainer mb-10"}>
-          <div className={"textContainer"}>
-            <h1
-              className={`text-white font-bold md:text-[40px] sm:text-[50px] xs:text-[30px] text-[20px] mb-14`}
+        <motion.div 
+          initial="hidden"
+          animate="show"
+          className="infoContainer mb-10"
+        >
+          <motion.div 
+            variants={fadeIn("down", "spring", 0.2, 1)}
+            className="textContainer"
+          >
+            <motion.h1
+              variants={textVariant()}
+              className="text-white font-bold md:text-[40px] sm:text-[50px] xs:text-[30px] text-[20px] mb-14"
             >
               {blog?.title}
-            </h1>
-            <div className={"user"}>
-              <div className={"userImageContainer"}>
-                <img
-                  src={"/rashed_abir.png"}
+            </motion.h1>
+            <motion.div 
+              variants={fadeIn("up", "spring", 0.3, 1)}
+              className="user"
+            >
+              <div className="userImageContainer">
+                <motion.img
+                  whileHover={{ scale: 1.05 }}
+                  src="/rashed_abir.png"
                   alt=""
-                  fill
-                  className={"avatar"}
+                  className="avatar"
                 />
               </div>
-              <div className={"userTextContainer"}>
-                <span className={"username"}>Abu Rashed Khan</span>
-                <span className={"date"}>{blog?.date}</span>
-              </div>
-            </div>
-          </div>
+              <motion.div 
+                variants={fadeIn("left", "spring", 0.4, 1)}
+                className="userTextContainer"
+              >
+                <span className="username">Abu Rashed Khan</span>
+                <span className="date">{blog?.date}</span>
+              </motion.div>
+            </motion.div>
+          </motion.div>
           {blog?.image?.asset && (
-            <div className={"imageContainer"}>
-              <img
+            <motion.div 
+              variants={fadeIn("up", "spring", 0.5, 1)}
+              className="h-[350px] w-[500px] relative"
+            >
+              <motion.img
+                whileHover={{ scale: 1.02 }}
+                transition={{ duration: 0.2 }}
                 src={blog?.image?.asset?.url}
                 alt=""
-                fill
-                className={"image"}
+                className="image w-full h-full object-cover rounded-2xl"
               />
-            </div>
+            </motion.div>
           )}
-        </div>
-        <div className={`lg:grid grid-cols-12 gap-20 w-full`}>
-          <div className={`post col-span-8`}>
+        </motion.div>
+        <div className="lg:grid grid-cols-12 gap-20 w-full">
+          <motion.div 
+            variants={fadeIn("right", "spring", 0.5, 1)}
+            initial="hidden"
+            animate="show"
+            className="post col-span-8"
+          >
             <BlogDescription
               blocks={blog?.body}
-              //   serializers={serializers}
-              className={"blog_description"}
+              className="blog_description"
             />
-          </div>
-          <div className="col-span-4">
+          </motion.div>
+          <motion.div 
+            variants={fadeIn("left", "spring", 0.6, 1)}
+            initial="hidden"
+            animate="show"
+            className="col-span-4"
+          >
             <Menu />
-          </div>
+          </motion.div>
         </div>
       </div>
       <div className="relative z-0">

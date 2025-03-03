@@ -1,48 +1,11 @@
-// import React from "react";
-// import styles from "./menu.module.css";
-// import MenuPosts from "../menuPosts/MenuPosts";
-// import MenuCategories from "../menuCategories/MenuCategories";
-
-// const getData = async (page = 1, cat = "") => {
-//   const res = await fetch(
-//     `${process.env.API_BASE_URL}/posts?page=${page}&cat=${
-//       cat || ""
-//     }&popular=true`,
-//     {
-//       cache: "no-store",
-//     }
-//   );
-
-//   if (!res.ok) {
-//     throw new Error("Failed");
-//   }
-
-//   return res.json();
-// };
-
-// const Menu = async () => {
-//   const { posts, count } = { posts: [] };
-
-//   return (
-//     <div className={styles.container}>
-//       <h2 className={styles.subtitle}>{"What's hot"}</h2>
-//       <h1 className={styles.title}>Most Popular</h1>
-//       <MenuPosts withImage={false} posts={posts} />
-//       <h2 className={styles.subtitle}>Discover by topic</h2>
-//       <h1 className={styles.title}>Categories</h1>
-//       <MenuCategories />
-//     </div>
-//   );
-// };
-
-// export default Menu;
-
 import React, { Fragment, useEffect, useState } from "react";
 import styles from "./menu.module.css";
 import MenuCategories from "../menuCategories/MenuCategories";
 import client from "../../Client";
 import MenuPosts from "../menuPosts/MenuPosts";
 import { useParams } from "react-router-dom";
+import { motion } from "framer-motion";
+import { fadeIn, textVariant } from "../../utils/motion";
 
 const Menu = () => {
   const [blogs, setBlogs] = useState([]);
@@ -83,21 +46,52 @@ const Menu = () => {
     fetchBlogs();
   }, []);
 
-  console.log(blogs);
-
   return (
-    <div className={styles.container}>
+    <motion.div
+      variants={fadeIn("left", "spring", 0.3, 1)}
+      initial="hidden"
+      animate="show"
+      className={styles.container}
+    >
       {blogs && blogs.length > 0 && (
         <Fragment>
-          <h2 className={styles.subtitle}>{"What's hot"}</h2>
-          <h1 className={styles.title}>Most Popular</h1>
+          <motion.h2 
+            variants={textVariant(0.1)}
+            className={styles.subtitle}
+          >
+            {"What's hot"}
+          </motion.h2>
+          <motion.h1 
+            variants={textVariant(0.2)}
+            className={styles.title}
+          >
+            Most Popular
+          </motion.h1>
         </Fragment>
       )}
-      <MenuPosts withImage={false} posts={blogs} />
-      <h2 className={styles.subtitle}>Discover by topic</h2>
-      <h1 className={styles.title}>Categories</h1>
-      <MenuCategories />
-    </div>
+      <motion.div
+        variants={fadeIn("up", "spring", 0.3, 0.75)}
+      >
+        <MenuPosts withImage={false} posts={blogs} />
+      </motion.div>
+      <motion.h2 
+        variants={textVariant(0.4)}
+        className={styles.subtitle}
+      >
+        Discover by topic
+      </motion.h2>
+      <motion.h1 
+        variants={textVariant(0.5)}
+        className={styles.title}
+      >
+        Categories
+      </motion.h1>
+      <motion.div
+        variants={fadeIn("up", "spring", 0.6, 0.75)}
+      >
+        <MenuCategories />
+      </motion.div>
+    </motion.div>
   );
 };
 
