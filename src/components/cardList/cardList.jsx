@@ -4,6 +4,9 @@ import Card from "../card/Card";
 import Pagination from "../pagination/Pagination";
 import animationData from "./notfound.json";
 import Lottie from "react-lottie";
+import { motion } from "framer-motion";
+import { fadeIn, textVariant } from "../../utils/motion";
+import { SectionWrapper } from "../../hoc";
 
 const defaultOptions = {
   loop: true,
@@ -77,36 +80,67 @@ const cardList = ({ start, category, limit }) => {
   }, [totalCount, start, limit, category, callback]);
 
   return (
-    <div className={"max-w-7xl mx-auto z-0 sm:px-16 px-6 relative pt-[100px]"}>
-      <h1
+    <div 
+      className={"max-w-7xl mx-auto z-0 sm:px-16 px-6 relative pt-[100px]"}
+    >
+      <motion.h1
+        variants={textVariant()}
         className={`text-white font-medium lg:text-[30px] sm:text-[26px] xs:text-[20px] text-[16px] lg:leading-[40px] mb-[25px]`}
       >
         Recent Posts
-      </h1>
+      </motion.h1>
 
-      <div className={""}>
+      <motion.div 
+        variants={fadeIn("up", "spring", 0.2, 1)}
+        className={""}
+      >
         {blogs && blogs.length > 0 ? (
-          blogs?.map((item, i) => <Card item={item} key={i} />)
+          blogs?.map((item, i) => (
+            <motion.div
+              key={i}
+              variants={fadeIn("up", "spring", i * 0.1, 0.5)}
+              whileInView="show"
+              viewport={{ once: false, amount: 0.25 }}
+              whileHover={{ scale: 1.02 }}
+              transition={{ duration: 0.2 }}
+            >
+              <Card item={item} />
+            </motion.div>
+          ))
         ) : (
-          <div className="no_data_dashboard">
+          <motion.div 
+            variants={fadeIn("up", "spring", 0.3, 1)}
+            className="no_data_dashboard"
+          >
             {animationData && (
               <Lottie options={defaultOptions} height={"20%"} width={"25%"} />
             )}
-            <h4>No Data Found!</h4>
-          </div>
+            <motion.h4
+              variants={fadeIn("up", "spring", 0.4, 1)}
+            >
+              No Data Found!
+            </motion.h4>
+          </motion.div>
         )}
-      </div>
+      </motion.div>
       {totalCount > limit && (
-        <Pagination
-          page={start}
-          hasPrev={hasPrev}
-          hasNext={hasNext}
-          setCallback={setCallback}
-          callback={callback}
-        />
+        <motion.div
+          variants={fadeIn("up", "spring", 0.5, 1)}
+          whileInView="show"
+          viewport={{ once: false, amount: 0.25 }}
+        >
+          <Pagination
+            page={start}
+            hasPrev={hasPrev}
+            hasNext={hasNext}
+            setCallback={setCallback}
+            callback={callback}
+          />
+        </motion.div>
       )}
     </div>
   );
 };
 
 export default cardList;
+// export default SectionWrapper(cardList, "cardList");
