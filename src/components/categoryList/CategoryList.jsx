@@ -22,7 +22,7 @@ const CategoryList = () => {
 
   return (
     <div 
-      className={"max-w-7xl mx-auto z-0 px-6 relative pt-[30px]"}
+      className={"max-w-7xl mx-auto px-5 relative z-0 pt-[50px]"}
     >
       <motion.h1
         variants={textVariant()}

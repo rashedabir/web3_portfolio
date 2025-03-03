@@ -17,7 +17,7 @@ const Blogs = () => {
       <div className="bg-hero-pattern bg-cover bg-no-repeat bg-center">
         <Navbar />
       </div>
-      <div className={``}>
+      <div className={`pt-[100px]`}>
         <Featured />
         <CategoryList />
         <CardList start={page ?? 0} limit={7} category={category} />

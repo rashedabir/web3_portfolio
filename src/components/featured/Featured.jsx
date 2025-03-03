@@ -72,7 +72,7 @@ const Featured = () => {
 
   return (
     <div
-      className={`max-w-7xl mx-auto z-0`}
+      className={`max-w-7xl mx-auto px-6 relative z-0`}
     >
       <div className="overflow-hidden">
         <Spotlight

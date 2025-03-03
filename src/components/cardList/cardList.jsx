@@ -81,7 +81,7 @@ const cardList = ({ start, category, limit }) => {
 
   return (
     <div 
-      className={"max-w-7xl mx-auto z-0 sm:px-16 px-6 relative pt-[100px]"}
+      className={"max-w-7xl mx-auto z-0 px-5 relative pt-[100px]"}
     >
       <motion.h1
         variants={textVariant()}
