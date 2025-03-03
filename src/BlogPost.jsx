@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import client from "./Client";
 import BlockContent from "@sanity/block-content-to-react";
 import Menu from "./components/menu/Menu";
-import { FaCopy } from "react-icons/fa";
+import { FaCopy, FaCheck } from "react-icons/fa";
 import ReactDOM from "react-dom";
 import { motion } from "framer-motion";
 import { fadeIn, textVariant } from "./utils/motion";
@@ -44,13 +44,39 @@ const BlogDescription = ({ blocks }) => {
       if (!block.querySelector(".copy-button")) {
         const button = document.createElement("button");
         button.className = "copy-button";
-        const iconElement = document.createElement("div");
-        ReactDOM.render(<FaCopy />, iconElement);
-        button.appendChild(iconElement);
+        
+        // Create icon container
+        const iconContainer = document.createElement("div");
+        iconContainer.className = "icon-container";
+        
+        // Create copy icon
+        const copyIcon = document.createElement("div");
+        copyIcon.className = "copy-icon";
+        ReactDOM.render(<FaCopy />, copyIcon);
+        
+        // Create check icon
+        const checkIcon = document.createElement("div");
+        checkIcon.className = "check-icon hidden";
+        ReactDOM.render(<FaCheck />, checkIcon);
+        
+        iconContainer.appendChild(copyIcon);
+        iconContainer.appendChild(checkIcon);
+        button.appendChild(iconContainer);
+
         button.addEventListener("click", () => {
           navigator.clipboard
             .writeText(block.textContent)
-            .then(() => {})
+            .then(() => {
+              copyIcon.classList.add("hidden");
+              checkIcon.classList.remove("hidden");
+              button.classList.add("copied");
+              
+              setTimeout(() => {
+                copyIcon.classList.remove("hidden");
+                checkIcon.classList.add("hidden");
+                button.classList.remove("copied");
+              }, 2000);
+            })
             .catch((err) => console.error("Failed to copy: ", err));
         });
         block.appendChild(button);
@@ -76,6 +102,42 @@ const BlogDescription = ({ blocks }) => {
         dataset={"production"}
         projectId={"nbs6byyr"}
       />
+      <style jsx global>{`
+        .blog_description code {
+          @apply relative font-mono text-[14px] bg-[#1a1a1a] rounded-lg p-4 block my-4;
+        }
+        
+        .copy-button {
+          @apply absolute top-2 right-2 p-2 rounded-md bg-[#2a2a2a] hover:bg-[#3a3a3a] transition-all duration-200;
+        }
+        
+        .copy-button.copied {
+          @apply bg-green-600;
+        }
+        
+        .copy-button svg {
+          @apply w-4 h-4 text-gray-300;
+        }
+        
+        .hidden {
+          display: none;
+        }
+        
+        .icon-container {
+          position: relative;
+          width: 16px;
+          height: 16px;
+        }
+        
+        .copy-icon,
+        .check-icon {
+          @apply absolute top-0 left-0 transition-all duration-200;
+        }
+        
+        .check-icon svg {
+          @apply text-white;
+        }
+      `}</style>
     </motion.div>
   );
 };
@@ -169,7 +231,7 @@ const BlogPost = () => {
               </motion.div>
             </motion.div>
           </motion.div>
-          {blog?.image?.asset && (
+          {blog?.image?.asset && window.innerWidth > 768 && (
             <motion.div 
               variants={fadeIn("up", "spring", 0.5, 1)}
               className="h-[350px] w-[500px] relative"
@@ -184,7 +246,7 @@ const BlogPost = () => {
             </motion.div>
           )}
         </motion.div>
-        <div className="lg:grid grid-cols-12 gap-20 w-full">
+        <div className="lg:grid grid-cols-12 gap-20 w-full relative">
           <motion.div 
             variants={fadeIn("right", "spring", 0.5, 1)}
             initial="hidden"
@@ -200,7 +262,7 @@ const BlogPost = () => {
             variants={fadeIn("left", "spring", 0.6, 1)}
             initial="hidden"
             animate="show"
-            className="col-span-4"
+            className="col-span-4 lg:sticky lg:top-[10px] h-fit"
           >
             <Menu />
           </motion.div>
