@@ -45,7 +45,7 @@ const Card = ({ item, key }) => {
           <div className="lg:col-span-6 md:col-span-6 sm:col-span-12 xs:col-span-12">
             <div
               className={
-                "lg:h-[300px] xs:h-[250px] lg:w-full xs:w-full xs:mb-5 lg:mb-0"
+                "lg:h-[300px] xs:h-[250px] lg:w-full xs:w-full mb-3 xs:mb-3 lg:mb-0"
               }
             >
               <img

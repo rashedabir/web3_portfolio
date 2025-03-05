@@ -96,7 +96,7 @@ const Featured = () => {
           variants={fadeIn("right", "spring", 0.3, 0.75)}
           className="col-span-6"
         >
-          <div className="lg:h-[350px] xs:h-[300px] lg:w-full xs:w-full xs:mb-5 lg:mb-0">
+          <div className="lg:h-[350px] xs:h-[300px] lg:w-full xs:w-full mb-3 xs:mb-3 lg:mb-0">
             <motion.img
               whileHover={{ scale: 1.02 }}
               transition={{ duration: 0.2 }}
