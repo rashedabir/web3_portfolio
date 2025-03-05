@@ -3,9 +3,12 @@ import { Link } from "react-router-dom";
 import client from "../../Client";
 import { motion } from "framer-motion";
 import { fadeIn, textVariant } from "../../utils/motion";
+import { SectionWrapper } from "../../hoc";
 
 const CategoryList = () => {
   const [category, setCategory] = useState([]);
+
+  console.log({ category });
 
   useLayoutEffect(() => {
     client
@@ -21,9 +24,7 @@ const CategoryList = () => {
   }, []);
 
   return (
-    <div 
-      className={"max-w-7xl mx-auto px-5 relative z-0 pt-[50px]"}
-    >
+    <div className={"max-w-7xl mx-auto relative z-0 mt-[-100px] mb-[-100px]"}>
       <motion.h1
         variants={textVariant()}
         className={
@@ -32,17 +33,17 @@ const CategoryList = () => {
       >
         Popular Categories
       </motion.h1>
-      <motion.div 
+      <motion.div
         variants={fadeIn("up", "spring", 0.2, 1)}
         className={`flex flex-wrap justify-between gap-[20px]`}
       >
         {category?.map((item, index) => (
-          <motion.div
+          <div
             key={item._id}
-            variants={fadeIn("up", "spring", index * 0.1, 0.5)}
-            whileHover={{ 
+            variants={fadeIn("right", "spring", index * 0.5, 0.75)}
+            whileHover={{
               scale: 1.05,
-              transition: { duration: 0.2 }
+              transition: { duration: 0.2 },
             }}
             whileTap={{ scale: 0.95 }}
             className={`flex items-center justify-center w-[15%] h-[80px] rounded-[10px] text-white gap-[10px] cursor-pointer`}
@@ -59,11 +60,12 @@ const CategoryList = () => {
                 {item.title}
               </motion.span>
             </Link>
-          </motion.div>
+          </div>
         ))}
       </motion.div>
     </div>
   );
 };
 
-export default CategoryList;
+// export default CategoryList;
+export default SectionWrapper(CategoryList, "blogcategory");

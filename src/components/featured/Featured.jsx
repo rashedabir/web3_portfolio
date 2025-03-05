@@ -71,9 +71,7 @@ const Featured = () => {
   }, []);
 
   return (
-    <div
-      className={`max-w-7xl mx-auto px-6 relative z-0`}
-    >
+    <div className={`max-w-7xl mx-auto relative z-0`}>
       <div className="overflow-hidden">
         <Spotlight
           className="-top-40 -left-10 md:-left-32 md:-top-20 h-screen"
@@ -98,7 +96,7 @@ const Featured = () => {
           variants={fadeIn("right", "spring", 0.3, 0.75)}
           className="col-span-6"
         >
-          <div className="lg:h-[400px] xs:h-[300px] lg:w-full xs:w-full xs:mb-5 lg:mb-0">
+          <div className="lg:h-[350px] xs:h-[300px] lg:w-full xs:w-full xs:mb-5 lg:mb-0">
             <motion.img
               whileHover={{ scale: 1.02 }}
               transition={{ duration: 0.2 }}
@@ -124,7 +122,7 @@ const Featured = () => {
               variants={fadeIn("up", "spring", 0.3, 0.75)}
               className="sm:text-[18px] text-[14px] text-secondary desc"
             >
-              {extractPlainText(blogs?.body)?.slice(0, 450) + "..."}
+              {extractPlainText(blogs?.body)?.slice(0, 250) + "..."}
             </motion.div>
             <motion.button
               variants={fadeIn("up", "spring", 0.4, 0.75)}
@@ -143,5 +141,5 @@ const Featured = () => {
   );
 };
 
-export default Featured;
-// export default SectionWrapper(Featured, "featured");
+// export default Featured;
+export default SectionWrapper(Featured, "featured");

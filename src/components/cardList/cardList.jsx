@@ -25,6 +25,9 @@ const cardList = ({ start, category, limit }) => {
   const [callback, setCallback] = useState(false);
 
   const fetchBlogs = async (start, limit, category) => {
+    // Ensure start and limit are numbers
+    start = Number.isInteger(start) ? start : 0;
+    limit = Number.isInteger(limit) ? limit : 10; // Default to 10
     const categoryFilter = category
       ? `&& blogcategory._ref == "${category}"`
       : "";
@@ -79,10 +82,10 @@ const cardList = ({ start, category, limit }) => {
     setHasPrev(hasPrev);
   }, [totalCount, start, limit, category, callback]);
 
+  console.log({ blogs });
+
   return (
-    <div 
-      className={"max-w-7xl mx-auto z-0 px-5 relative pt-[100px]"}
-    >
+    <div className={"max-w-7xl mx-auto z-0 relative"}>
       <motion.h1
         variants={textVariant()}
         className={`text-white font-medium lg:text-[30px] sm:text-[26px] xs:text-[20px] text-[16px] lg:leading-[40px] mb-[25px]`}
@@ -90,10 +93,7 @@ const cardList = ({ start, category, limit }) => {
         Recent Posts
       </motion.h1>
 
-      <motion.div 
-        variants={fadeIn("up", "spring", 0.2, 1)}
-        className={""}
-      >
+      <motion.div variants={fadeIn("up", "spring", 0.2, 1)} className={""}>
         {blogs && blogs.length > 0 ? (
           blogs?.map((item, i) => (
             <motion.div
@@ -108,16 +108,14 @@ const cardList = ({ start, category, limit }) => {
             </motion.div>
           ))
         ) : (
-          <motion.div 
+          <motion.div
             variants={fadeIn("up", "spring", 0.3, 1)}
             className="no_data_dashboard"
           >
             {animationData && (
               <Lottie options={defaultOptions} height={"20%"} width={"25%"} />
             )}
-            <motion.h4
-              variants={fadeIn("up", "spring", 0.4, 1)}
-            >
+            <motion.h4 variants={fadeIn("up", "spring", 0.4, 1)}>
               No Data Found!
             </motion.h4>
           </motion.div>
@@ -142,5 +140,5 @@ const cardList = ({ start, category, limit }) => {
   );
 };
 
-export default cardList;
-// export default SectionWrapper(cardList, "cardList");
+// export default cardList;
+export default SectionWrapper(cardList, "blogcardlist");
