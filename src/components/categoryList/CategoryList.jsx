@@ -24,7 +24,7 @@ const CategoryList = () => {
   }, []);
 
   return (
-    <div className={"max-w-7xl mx-auto relative z-0 mt-[-100px] mb-[-100px]"}>
+    <div className={"max-w-7xl mx-auto relative z-0 mt-[-50px] mb-[-50px]"}>
       <motion.h1
         variants={textVariant()}
         className={
@@ -46,7 +46,7 @@ const CategoryList = () => {
               transition: { duration: 0.2 },
             }}
             whileTap={{ scale: 0.95 }}
-            className={`flex items-center justify-center w-[15%] h-[80px] rounded-[10px] text-white gap-[10px] cursor-pointer`}
+            className={`flex items-center justify-center w-full md:w-[30%] lg:w-[15%] h-[80px] rounded-[10px] text-white gap-[10px] cursor-pointer`}
             style={{ background: item.bg_color }}
           >
             <Link

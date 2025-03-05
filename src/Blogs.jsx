@@ -4,7 +4,6 @@ import { Footer, Navbar } from "./components";
 import CardList from "./components/cardList/cardList";
 import CategoryList from "./components/categoryList/CategoryList";
 import Featured from "./components/featured/Featured";
-import { styles } from "./styles";
 
 const Blogs = () => {
   const location = useLocation();

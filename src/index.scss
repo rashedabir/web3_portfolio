@@ -13,6 +13,14 @@
   color-scheme: dark;
 }
 
+.blog_title{
+  overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+}
+
 .hash-span {
   margin-top: -100px;
   padding-bottom: 100px;
@@ -242,7 +250,15 @@
   .desc {
     overflow: hidden;
     text-overflow: ellipsis;
-    -webkit-line-clamp: 5;
+    -webkit-line-clamp: 4;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+  }
+
+  .blog_title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 1;
     display: -webkit-box;
     -webkit-box-orient: vertical;
   }

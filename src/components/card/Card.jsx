@@ -45,7 +45,7 @@ const Card = ({ item, key }) => {
           <div className="lg:col-span-6 md:col-span-6 sm:col-span-12 xs:col-span-12">
             <div
               className={
-                "lg:h-[350px] xs:h-[250px] lg:w-full xs:w-full xs:mb-5 lg:mb-0"
+                "lg:h-[300px] xs:h-[250px] lg:w-full xs:w-full xs:mb-5 lg:mb-0"
               }
             >
               <img
@@ -72,7 +72,7 @@ const Card = ({ item, key }) => {
           </div>
           <Link
             to={`/blog/posts/${item.slug}`}
-            className="text-white font-medium lg:text-[30px] sm:text-[26px] xs:text-[20px] text-[16px] lg:leading-[40px] title"
+            className="text-white font-medium lg:text-[30px] sm:text-[26px] xs:text-[20px] text-[16px] lg:leading-[40px] blog_title"
           >
             {item.title}
           </Link>
