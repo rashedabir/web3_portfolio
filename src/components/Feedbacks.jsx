@@ -5,11 +5,11 @@ import { SectionWrapper } from "../hoc";
 import { styles } from "../styles";
 import { fadeIn, textVariant } from "../utils/motion";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-
 import client from "../Client";
 import Slider from "react-slick";
 import { InfiniteMovingCards } from "./ui/InfiniteMovingCards";
 import { testimonialss } from "../constants";
+import { AnimatedTestimonials } from "./ui/AnimatedTestimonials";
 
 const settings = {
   dots: true,
@@ -125,7 +125,7 @@ const Feedbacks = () => {
         </motion.div>
       </div>
       <div className={`-mt-20 pb-14 ${styles.paddingX}`}>
-        {
+        {/*
           <Slider {...settings}>
             {testimonials &&
               testimonials.length > 0 &&
@@ -137,7 +137,8 @@ const Feedbacks = () => {
                 />
               ))}
           </Slider>
-        }
+        */}
+        <AnimatedTestimonials testimonials={testimonials} />
       </div>
     </div>
   );
