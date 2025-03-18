@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import React, { useLayoutEffect, useState } from "react";
+import React, { useLayoutEffect, useRef, useState } from "react";
 import Tilt from "react-tilt";
 
 import { eye } from "../assets";
@@ -10,16 +10,19 @@ import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import client from "../Client";
 import Slider from "react-slick";
 import { CardBody, CardContainer, CardItem } from "./ui/3DCard";
+import { TiArrowLeft, TiArrowRight } from "react-icons/ti";
+import { LinkPreview } from "./ui/LinkPreview";
 
 const settings = {
-  dots: true,
+  dots: false,
   infinite: true,
   speed: 500,
   slidesToShow: 3,
   slidesToScroll: 3,
-  nextArrow: <IoIosArrowBack />,
-  prevArrow: <IoIosArrowForward />,
-  autoplay: true, // Enable autoplay
+  arrows: false,
+  nextArrow: <TiArrowLeft />,
+  prevArrow: <TiArrowRight />,
+  autoplay: false, // Enable autoplay
   autoplaySpeed: 7000, // Set autoplay speed in milliseconds (1 second in this case)
   responsive: [
     {
@@ -59,7 +62,9 @@ const ProjectCard = ({
             />
 
             <div className="absolute inset-0 flex justify-end m-3 card-img_hover">
-              <div
+              <LinkPreview
+                url={source_code_link}
+                imageSrc={image?.asset?.url}
                 onClick={() => window.open(source_code_link, "_blank")}
                 className="black-gradient w-10 h-10 rounded-full flex justify-center items-center cursor-pointer"
               >
@@ -68,7 +73,7 @@ const ProjectCard = ({
                   alt="source code"
                   className="w-1/2 h-1/2 object-contain"
                 />
-              </div>
+              </LinkPreview>
             </div>
           </CardItem>
 
@@ -109,6 +114,16 @@ const ProjectCard = ({
 
 const Works = () => {
   const [projects, setProjects] = useState([]);
+  // Update the JSX code
+  const sliderRef = useRef(null);
+
+  const goToPrev = () => {
+    sliderRef.current.slickPrev();
+  };
+
+  const goToNext = () => {
+    sliderRef.current.slickNext();
+  };
 
   useLayoutEffect(() => {
     client
@@ -152,8 +167,22 @@ const Works = () => {
         </motion.p>
       </div>
 
-      <div className="mt-0">
-        <Slider {...settings}>
+      <div className="mt-3">
+        <div className="flex justify-end items-center gap-5 mb-10 pe-4">
+          <button
+            onClick={goToPrev}
+            className="text-[40px] bg-[#151030] text-secondary rounded-full"
+          >
+            <TiArrowLeft />
+          </button>
+          <button
+            onClick={goToNext}
+            className="text-[40px] bg-[#151030] text-secondary rounded-full"
+          >
+            <TiArrowRight />
+          </button>
+        </div>
+        <Slider ref={sliderRef} {...settings}>
           {projects &&
             projects.length > 0 &&
             projects
