@@ -6,7 +6,7 @@ import {
 } from "react-vertical-timeline-component";
 
 import "react-vertical-timeline-component/style.min.css";
-
+import { FaMapMarkerAlt } from "react-icons/fa";
 import client from "../Client";
 
 import { SectionWrapper } from "../hoc";
@@ -15,6 +15,7 @@ import { textVariant } from "../utils/motion";
 import Approach from "./Approach";
 
 const ExperienceCard = ({ experience }) => {
+  console.log({ experience });
   return (
     <VerticalTimelineElement
       contentStyle={{
@@ -42,6 +43,13 @@ const ExperienceCard = ({ experience }) => {
         >
           {experience.company_name}
         </p>
+        <small
+          className="text-secondary text-[12px] font-light flex items-center gap-2 pt-1"
+          style={{ margin: 0 }}
+        >
+          <FaMapMarkerAlt />
+          {experience.location}
+        </small>
       </div>
 
       <ul className="mt-5 list-disc ml-5 space-y-2">
@@ -71,6 +79,7 @@ const Experience = () => {
       iconBg,
       date,
       points,
+      location,
       icon{
         asset->{
           _id,

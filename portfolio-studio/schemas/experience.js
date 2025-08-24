@@ -17,6 +17,12 @@ export default {
       validation: (Rule) => Rule.required(),
     },
     {
+      title: 'Location',
+      name: 'location',
+      type: 'string',
+      validation: (Rule) => Rule.required(),
+    },
+    {
       title: 'Sort Order',
       name: 'order',
       type: 'string',
