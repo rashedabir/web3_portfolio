@@ -8,8 +8,6 @@ import { SectionWrapper } from "../../hoc";
 const CategoryList = () => {
   const [category, setCategory] = useState([]);
 
-  console.log({ category });
-
   useLayoutEffect(() => {
     client
       .fetch(

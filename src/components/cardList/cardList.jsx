@@ -71,6 +71,7 @@ const cardList = ({ start, category, limit }) => {
   };
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     fetchBlogs(start, limit, category);
     fetchBlogCount(category);
   }, [start, limit, callback, category]);

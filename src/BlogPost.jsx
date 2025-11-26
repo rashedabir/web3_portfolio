@@ -44,21 +44,21 @@ const BlogDescription = ({ blocks }) => {
       if (!block.querySelector(".copy-button")) {
         const button = document.createElement("button");
         button.className = "copy-button";
-        
+
         // Create icon container
         const iconContainer = document.createElement("div");
         iconContainer.className = "icon-container";
-        
+
         // Create copy icon
         const copyIcon = document.createElement("div");
         copyIcon.className = "copy-icon";
         ReactDOM.render(<FaCopy />, copyIcon);
-        
+
         // Create check icon
         const checkIcon = document.createElement("div");
         checkIcon.className = "check-icon hidden";
         ReactDOM.render(<FaCheck />, checkIcon);
-        
+
         iconContainer.appendChild(copyIcon);
         iconContainer.appendChild(checkIcon);
         button.appendChild(iconContainer);
@@ -70,7 +70,7 @@ const BlogDescription = ({ blocks }) => {
               copyIcon.classList.add("hidden");
               checkIcon.classList.remove("hidden");
               button.classList.add("copied");
-              
+
               setTimeout(() => {
                 copyIcon.classList.remove("hidden");
                 checkIcon.classList.add("hidden");
@@ -106,34 +106,34 @@ const BlogDescription = ({ blocks }) => {
         .blog_description code {
           @apply relative font-mono text-[14px] bg-[#1a1a1a] rounded-lg p-4 block my-4;
         }
-        
+
         .copy-button {
           @apply absolute top-2 right-2 p-2 rounded-md bg-[#2a2a2a] hover:bg-[#3a3a3a] transition-all duration-200;
         }
-        
+
         .copy-button.copied {
           @apply bg-green-600;
         }
-        
+
         .copy-button svg {
           @apply w-4 h-4 text-gray-300;
         }
-        
+
         .hidden {
           display: none;
         }
-        
+
         .icon-container {
           position: relative;
           width: 16px;
           height: 16px;
         }
-        
+
         .copy-icon,
         .check-icon {
           @apply absolute top-0 left-0 transition-all duration-200;
         }
-        
+
         .check-icon svg {
           @apply text-white;
         }
@@ -186,6 +186,8 @@ const BlogPost = () => {
   };
 
   useEffect(() => {
+    // Scroll to top when component mounts or slug changes
+    window.scrollTo(0, 0);
     fetchBlogDetails();
   }, [slug]);
 
@@ -195,12 +197,12 @@ const BlogPost = () => {
         <Navbar />
       </div>
       <div className="max-w-7xl mx-auto z-0 px-6 relative pt-[110px]">
-        <motion.div 
+        <motion.div
           initial="hidden"
           animate="show"
           className="infoContainer mb-10"
         >
-          <motion.div 
+          <motion.div
             variants={fadeIn("down", "spring", 0.2, 1)}
             className="textContainer"
           >
@@ -210,7 +212,7 @@ const BlogPost = () => {
             >
               {blog?.title}
             </motion.h1>
-            <motion.div 
+            <motion.div
               variants={fadeIn("up", "spring", 0.3, 1)}
               className="user"
             >
@@ -222,7 +224,7 @@ const BlogPost = () => {
                   className="avatar"
                 />
               </div>
-              <motion.div 
+              <motion.div
                 variants={fadeIn("left", "spring", 0.4, 1)}
                 className="userTextContainer"
               >
@@ -232,7 +234,7 @@ const BlogPost = () => {
             </motion.div>
           </motion.div>
           {blog?.image?.asset && window.innerWidth > 768 && (
-            <motion.div 
+            <motion.div
               variants={fadeIn("up", "spring", 0.5, 1)}
               className="h-[350px] w-[500px] relative"
             >
@@ -247,18 +249,15 @@ const BlogPost = () => {
           )}
         </motion.div>
         <div className="lg:grid grid-cols-12 gap-20 w-full relative">
-          <motion.div 
+          <motion.div
             variants={fadeIn("right", "spring", 0.5, 1)}
             initial="hidden"
             animate="show"
             className="post col-span-8"
           >
-            <BlogDescription
-              blocks={blog?.body}
-              className="blog_description"
-            />
+            <BlogDescription blocks={blog?.body} className="blog_description" />
           </motion.div>
-          <motion.div 
+          <motion.div
             variants={fadeIn("left", "spring", 0.6, 1)}
             initial="hidden"
             animate="show"
