@@ -88,8 +88,10 @@ const ProjectModal = ({ isOpen, onClose, project }) => {
   // Use sample data for now, will be replaced with dynamic data later
   const projectData = {
     name: project?.name,
-    description: project?.description,
-    images: [project?.image?.asset?.url],
+    description: project?.long_description,
+    images: project?.images?.length > 0 
+      ? project.images.map(img => img.asset.url) 
+      : [project?.image?.asset?.url],
     tags: project?.tags,
     source_code_link: null,
     live_link: project?.source_code_link,
@@ -155,11 +157,11 @@ const ProjectModal = ({ isOpen, onClose, project }) => {
             >
               <Slider ref={modalSliderRef} {...modalSliderSettings}>
                 {projectData.images.map((image, index) => (
-                  <div key={index} className="outline-none">
+                  <div key={index} className="outline-none bg-[#000000]">
                     <img
                       src={image}
                       alt={`${projectData.name} - Image ${index + 1}`}
-                      className="w-full h-[350px] sm:h-[450px] object-cover rounded-t-2xl"
+                      className="w-full h-[300px] sm:h-[400px] object-contain rounded-t-2xl"
                     />
                   </div>
                 ))}
@@ -174,9 +176,24 @@ const ProjectModal = ({ isOpen, onClose, project }) => {
               className="p-6 sm:p-8"
             >
               {/* Title */}
-              <h2 className="text-white font-bold text-2xl sm:text-3xl mb-4">
-                {projectData.name}
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-white font-bold text-2xl sm:text-3xl m-0 p-0">
+                {projectData.name} 
               </h2>
+              {projectData.live_link && (
+                  <motion.a
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.45, duration: 0.3 }}
+                    href={projectData.live_link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-4 sm:px-6 sm:py-3 rounded-lg transition-all duration-300 font-medium text-sm sm:text-base hover:scale-105"
+                  >
+                    View Live Demo
+                  </motion.a>
+                )}
+              </div>
 
               {/* Description */}
               <p className="text-secondary text-sm sm:text-base leading-relaxed mb-6">
@@ -195,42 +212,12 @@ const ProjectModal = ({ isOpen, onClose, project }) => {
                       initial={{ opacity: 0, scale: 0 }}
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{ delay: 0.3 + index * 0.05, duration: 0.3 }}
-                      className={`${tag.color} px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-black bg-opacity-30 text-xs sm:text-sm font-medium`}
+                      className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-black bg-opacity-30 text-xs sm:text-sm font-medium`}
                     >
-                      #{tag.name}
+                      <span className={`${tag.color}`}>#{tag.name}</span>
                     </motion.span>
                   ))}
                 </div>
-              </div>
-
-              {/* Links */}
-              <div className="flex gap-3 sm:gap-4 flex-wrap">
-                {projectData.source_code_link && (
-                  <motion.a
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.4, duration: 0.3 }}
-                    href={projectData.source_code_link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="bg-black bg-opacity-50 hover:bg-opacity-70 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg transition-all duration-300 font-medium text-sm sm:text-base hover:scale-105"
-                  >
-                    View Source Code
-                  </motion.a>
-                )}
-                {projectData.live_link && (
-                  <motion.a
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.45, duration: 0.3 }}
-                    href={projectData.live_link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg transition-all duration-300 font-medium text-sm sm:text-base hover:scale-105"
-                  >
-                    View Live Demo
-                  </motion.a>
-                )}
               </div>
             </motion.div>
           </motion.div>
@@ -339,9 +326,16 @@ const Works = () => {
         `*[_type == "projects"]{
       name,
       description,
+      long_description,
       order,
       source_code_link,
       tags,
+      images[]{
+        asset->{
+          _id,
+          url
+        }
+      },
       image{
         asset->{
           _id,
