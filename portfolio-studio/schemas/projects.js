@@ -17,6 +17,11 @@ export default {
       validation: (Rule) => Rule.required(),
     },
     {
+      title: 'Long Description',
+      name: 'long_description',
+      type: 'text',
+    },
+    {
       title: 'source code link',
       name: 'source_code_link',
       type: 'string',
@@ -34,6 +39,19 @@ export default {
         hotspot: true,
       },
       validation: (Rule) => Rule.required(),
+    },
+    {
+      title: 'Multiple Images',
+      name: 'images',
+      type: 'array',
+      of: [
+        {
+          type: 'image',
+          options: {
+            hotspot: true,
+          },
+        },
+      ],
     },
     {
       name: 'tags',
